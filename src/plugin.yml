@@ -1,0 +1,28 @@
+name: BlockHat
+main: me.nmc94.BlockHat.BlockHat
+version: 1.9b
+authors: [nmc94, Olof]
+depend: [Vault]
+commands:
+  blockhat:
+    description: Puts blocks on players heads
+    aliases: [hat]
+    usage: |
+           /<command> [[group <group>|<player>] <block>|ver|help]
+           Example: /<command> ver- Prints the version.
+           Example: /<command> help- Prints the help.
+           Example: /<command> - Puts the held block on your head.
+           Example: /<command> 1 - Puts the block with id 1 (stone) on your head.
+           Example: /<command> nmc94 sand - Puts sand on nmc94's head.
+           Example: /<command> group admin TnT - Puts tnt on all the players in the admin group heads.
+  unhat:
+    description: Removes player's hat.
+permissions:
+  blockhat.hat:
+    description: use /hat
+  blockhat.hat.items:
+    description: use /hat [item id]
+  blockhat.hat.give.players.items:
+    description: use /hat [player name] [item id]
+  blockhat.hat.give.groups.items:
+    description: use /hat group [group name] [item id]
