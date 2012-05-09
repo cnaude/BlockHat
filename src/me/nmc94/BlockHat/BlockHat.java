@@ -245,9 +245,10 @@ public class BlockHat extends JavaPlugin
 		//}
 
 		int id = item.getTypeId();
-		if ((id >= 0 && id <= 255) || validTypes.contains(id))
+                String itemName = item.getType().name();
+		if (!((id >= 0 && id <= 255) || validTypes.contains(id)))
 		{
-			player.sendMessage(ChatColor.RED + "You can't put that item on your head silly!");
+			player.sendMessage(ChatColor.RED + "You can't put "+itemName+" on your head silly!");
 			return false;
 		}
 
@@ -281,13 +282,13 @@ public class BlockHat extends JavaPlugin
 				}
 			}
 		}
-		if (inv.getHelmet().getType() == Material.AIR) 
+		if (id == 0) 
 		{
 			player.sendMessage("No longer wearing a hat!");
 		} 
 		else
 		{
-			player.sendMessage("Enjoy your new hat!");
+			player.sendMessage("Enjoy your new "+itemName+" hat!");
 		}
 		return true;
 	}
