@@ -245,7 +245,7 @@ public class BlockHat extends JavaPlugin
 		//}
 
 		int id = item.getTypeId();
-                String itemName = item.getType().name();
+                String itemName = item.getType().name().toLowerCase();
 		if (!((id >= 0 && id <= 255) || validTypes.contains(id)))
 		{
 			player.sendMessage(ChatColor.RED + "You can't put "+itemName+" on your head silly!");
