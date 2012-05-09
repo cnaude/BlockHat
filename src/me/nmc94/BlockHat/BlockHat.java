@@ -281,7 +281,7 @@ public class BlockHat extends JavaPlugin
 				}
 			}
 		}
-		if (inv.getHelmet().equals(Material.AIR)) 
+		if (inv.getHelmet().getType() == Material.AIR) 
 		{
 			player.sendMessage("No longer wearing a hat!");
 		} 
