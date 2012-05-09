@@ -26,31 +26,31 @@ public class BlockHat extends JavaPlugin
 	public static Permission permission = null;
 	public final static String NOPERM = ChatColor.DARK_RED + "You're not allowed to use that command!";
 	// private static Logger log = Logger.getLogger("Minecraft");
-	
-	@Override
-    public void onEnable()
-    {
-    	this.setupPermissions();
-    }
-	
-    private Boolean setupPermissions()
-    {
-        RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
-        if (permissionProvider != null)
-        {
-            permission = permissionProvider.getProvider();
-        }
-        return (permission != null);
-    }
 
-    boolean checkPermission(CommandSender sender, String nodes)
+	@Override
+	public void onEnable()
+	{
+		this.setupPermissions();
+	}
+
+	private Boolean setupPermissions()
+	{
+		RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+		if (permissionProvider != null)
+		{
+			permission = permissionProvider.getProvider();
+		}
+		return (permission != null);
+	}
+
+	boolean checkPermission(CommandSender sender, String nodes)
 	{
 		// TODO: Clean this up.
 		if (sender instanceof ConsoleCommandSender)
 		{
 			return nodes.startsWith("blockhat.hat.give.");
 		}
-		
+
 		if (sender instanceof Player)
 		{
 			Player player = (Player)sender;
@@ -67,7 +67,7 @@ public class BlockHat extends JavaPlugin
 		{
 			player = (Player)sender;
 		}
-		
+
 		if (commandLabel.equalsIgnoreCase("hat") || commandLabel.equalsIgnoreCase("blockhat")) 
 		{
 			if (args.length == 1)
@@ -83,7 +83,7 @@ public class BlockHat extends JavaPlugin
 				else if (checkPermission(sender, BlockHatPerm.HAT_ITEMS.node))
 				{
 					ItemStack stack = stackFromString(args[0], 0);
-	
+
 					if ((stack == null) || (stack.getTypeId() > 255) || (stack.getTypeId() < 1))
 					{
 						sender.sendMessage(ChatColor.RED + args[0] + " is not a valid block");
@@ -104,15 +104,15 @@ public class BlockHat extends JavaPlugin
 					if (checkPermission(sender, BlockHatPerm.HAT_GIVE_PLAYERS_ITEMS.node))
 					{
 						ItemStack stack = stackFromString(args[1], 0);
-	
+
 						if ((stack == null) || (stack.getTypeId() > 255) || (stack.getTypeId() < 1))
 						{
 							sender.sendMessage(ChatColor.RED + args[1] + " is not a valid block");
 							return true;
 						}
-	
+
 						List<Player> players = getServer().matchPlayer(args[0]);
-	
+
 						if (players.size() < 1)
 						{
 							sender.sendMessage(ChatColor.RED + "Could not find player");
@@ -145,13 +145,13 @@ public class BlockHat extends JavaPlugin
 					if (checkPermission(sender, BlockHatPerm.HAT_GIVE_GROUPS_ITEMS.node))
 					{
 						ItemStack stack = stackFromString(args[2], 0);
-	
+
 						if ((stack == null) || (stack.getTypeId() > 255) || (stack.getTypeId() < 1))
 						{
 							sender.sendMessage(ChatColor.RED + args[2] + " is not a valid block");
 							return true;
 						}
-	
+
 						List<Player> players = new ArrayList<Player>();
 						for (Player player2 : Bukkit.getOnlinePlayers())
 						{
@@ -160,7 +160,7 @@ public class BlockHat extends JavaPlugin
 								players.add(player2);
 							}
 						}
-	
+
 						if (players.size() < 1)
 						{
 							sender.sendMessage(ChatColor.RED + "Could not find any players in " + args[1]);
@@ -191,14 +191,14 @@ public class BlockHat extends JavaPlugin
 		} 
 		else if (commandLabel.equalsIgnoreCase("unhat")) 
 		{
-            if (checkPermission(sender, BlockHatPerm.HAT.node)) {
-                ItemStack item = new ItemStack(0);
-                placeOnHead(player, item);
-            } else {
-                sender.sendMessage(NOPERM);
-            }
-        }
-			return true;
+			if (checkPermission(sender, BlockHatPerm.HAT.node)) {
+				ItemStack item = new ItemStack(0);
+				placeOnHead(player, item);
+			} else {
+				sender.sendMessage(NOPERM);
+			}
+		}
+		return true;
 	}
 
 	private void showHelp(String cmd, CommandSender sender)
@@ -231,13 +231,13 @@ public class BlockHat extends JavaPlugin
 	{
 		PlayerInventory inv = player.getInventory();
 		ArrayList<Integer> validTypes = new ArrayList<Integer>();
-        validTypes.add(298); //Leather helmet
-        validTypes.add(302); //Chainmail helmet
-        validTypes.add(306); //Iron helmet
-        validTypes.add(310); //Diamond helmet
-        validTypes.add(314); //Gold helmet
-        
-        // Placing AIR on the head is a safe way to remove the hat.
+		validTypes.add(298); //Leather helmet
+		validTypes.add(302); //Chainmail helmet
+		validTypes.add(306); //Iron helmet
+		validTypes.add(310); //Diamond helmet
+		validTypes.add(314); //Gold helmet
+
+		// Placing AIR on the head is a safe way to remove the hat.
 		//if (item.getType() == Material.AIR)
 		//{
 		//	player.sendMessage(ChatColor.RED + "Why would you want air on your head?");
