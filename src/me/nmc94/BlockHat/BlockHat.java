@@ -20,17 +20,28 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.UnknownDependencyException;
+import java.util.logging.Logger;
+import org.bukkit.enchantments.Enchantment;
 
 public class BlockHat extends JavaPlugin
 {	
 	public static Permission permission = null;
 	public final static String NOPERM = ChatColor.DARK_RED + "You're not allowed to use that command!";
-	// private static Logger log = Logger.getLogger("Minecraft");
+	private final static Logger log = Logger.getLogger("Minecraft");
 
 	@Override
 	public void onEnable()
 	{
-		this.setupPermissions();
+            try 
+            {
+                this.setupPermissions();
+            }
+            catch (UnknownDependencyException e) 
+            {
+                    log.info("BlockHat requires Vault. Download the latest version from http://http://dev.bukkit.org/server-mods/vault/");
+                    getServer().getPluginManager().disablePlugin(this);
+            }
 	}
 
 	private Boolean setupPermissions()
@@ -236,6 +247,7 @@ public class BlockHat extends JavaPlugin
 		validTypes.add(306); //Iron helmet
 		validTypes.add(310); //Diamond helmet
 		validTypes.add(314); //Gold helmet
+                                                
 
 		// Placing AIR on the head is a safe way to remove the hat.
 		//if (item.getType() == Material.AIR)
@@ -254,6 +266,9 @@ public class BlockHat extends JavaPlugin
 
 		ItemStack helmet = inv.getHelmet();
 		ItemStack hat = new ItemStack(item.getType(), item.getAmount() < 0 ? item.getAmount() : 1, item.getDurability());
+                if (item.getEnchantments() != null) {
+                    hat.addEnchantments(item.getEnchantments());
+                }
 		MaterialData data = item.getData();
 		if (data != null)
 		{
