@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
-
+import java.util.logging.Logger;
 import net.milkbowl.vault.permission.Permission;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,10 +18,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.UnknownDependencyException;
-import java.util.logging.Logger;
-import org.bukkit.enchantments.Enchantment;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class BlockHat extends JavaPlugin
 {	
@@ -71,6 +68,7 @@ public class BlockHat extends JavaPlugin
 		return false;
 	}
 
+        @Override
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args)
 	{
 		Player player = null;
@@ -92,7 +90,7 @@ public class BlockHat extends JavaPlugin
 					sender.sendMessage(this.getDescription().getFullName());
 				}
 				else if (checkPermission(sender, BlockHatPerm.HAT_ITEMS.node))
-				{
+				{                                    
 					ItemStack stack = stackFromString(args[0], 0);
 
 					if ((stack == null) || (stack.getTypeId() > 255) || (stack.getTypeId() < 1))
@@ -223,14 +221,22 @@ public class BlockHat extends JavaPlugin
 		sender.sendMessage(ch + this.getDescription().getFullName());
 		sender.sendMessage(cc + "/" + cmd + " help " + cd + "-" + ct + " Displays help menu");
 		sender.sendMessage(cc + "/" + cmd + " version " + cd + "-" + ct + " Displays the current version");
-		if (checkPermission(sender, "blockhat.hat"))
+		if (checkPermission(sender, "blockhat.hat")) 
+                {
 			sender.sendMessage(cc + "/" + cmd + " " + cd + "-" + ct + " Puts the currently held item on your head");
+                }
 		if (checkPermission(sender, "blockhat.hat.items"))
+                {
 			sender.sendMessage(cc + "/" + cmd + " [block] " + cd + "-" + ct + " Puts a block with block id on your head");
-		if (checkPermission(sender, "blockhat.hat.give.players.items"))
+                }
+		if (checkPermission(sender, "blockhat.hat.give.players.items")) 
+                {
 			sender.sendMessage(cc + "/" + cmd + " [player] [block] " + cd + "-" + ct + " Puts a block on another player");
+                }
 		if (checkPermission(sender, "blockhat.hat.give.groups.items"))
+                {
 			sender.sendMessage(cc + "/" + cmd + " group [group] [block] " + cd + "-" + ct + " Puts blocks on all the players in that group");
+                }
 		sender.sendMessage(cd + "-" + ct + " To remove a hat, just take remove it from the helmet spot in your inventory");
 		sender.sendMessage(cd + "-" + ct + " Valid hat item id's are 1-255");
 		sender.sendMessage(nm + "Thanks for using BlockHat, I hope you enjoy it!");
@@ -310,8 +316,31 @@ public class BlockHat extends JavaPlugin
 
 	public ItemStack stackFromString(String item, int count)
 	{
-		Material material = Material.matchMaterial(item);
-		if (material == null) return null;
-		return new ItemStack(material, count);
+                Material material;                
+                String itemType = item;
+                Byte data = 0;
+                Short dmg = 0;
+                if (item.contains(":")) 
+                {
+                    String[] sp = item.split(":"); 
+                    try
+                    {
+                        data = Byte.parseByte(sp[1]);
+                    }
+                    catch (NumberFormatException nf)
+                    {
+
+                    }
+                    itemType = sp[0];
+                }
+		material = Material.matchMaterial(itemType);
+
+		if (material == null) 
+                {
+                    return null;
+                }
+                ItemStack itemStack = new ItemStack(material, count, dmg, data);
+		return itemStack;
 	}
+        
 }

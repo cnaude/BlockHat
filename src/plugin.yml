@@ -1,6 +1,6 @@
 name: BlockHat
 main: me.nmc94.BlockHat.BlockHat
-version: 1.10
+version: 1.11
 authors: [nmc94, Olof, cnaude]
 depend: [Vault]
 commands:
