@@ -18,36 +18,34 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.UnknownDependencyException;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BlockHat extends JavaPlugin
 {	
-	public static Permission permission = null;
+	public static Permission permission;
 	public final static String NOPERM = ChatColor.DARK_RED + "You're not allowed to use that command!";
 	private final static Logger log = Logger.getLogger("Minecraft");
 
 	@Override
 	public void onEnable()
 	{
-            try 
-            {
-                this.setupPermissions();
-            }
-            catch (UnknownDependencyException e) 
-            {
+                if (!this.setupPermissions()) 
+                {
                     log.info("BlockHat requires Vault. Download the latest version from http://http://dev.bukkit.org/server-mods/vault/");
                     getServer().getPluginManager().disablePlugin(this);
-            }
+                }
 	}
 
 	private Boolean setupPermissions()
 	{
-		RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
-		if (permissionProvider != null)
-		{
-			permission = permissionProvider.getProvider();
-		}
+                if (getServer().getPluginManager().getPlugin("Vault") != null) 
+                {
+                    RegisteredServiceProvider<Permission> permissionProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
+                    if (permissionProvider != null)
+                    {
+                            permission = permissionProvider.getProvider();
+                    }
+                }
 		return (permission != null);
 	}
 
