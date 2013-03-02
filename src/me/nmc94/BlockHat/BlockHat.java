@@ -198,7 +198,7 @@ public class BlockHat extends JavaPlugin
 		} 
 		else if (commandLabel.equalsIgnoreCase("unhat")) 
 		{
-			if (checkPermission(sender, BlockHatPerm.HAT.node)) {
+			if (checkPermission(sender, BlockHatPerm.UNHAT.node)) {
 				ItemStack item = new ItemStack(0);
 				placeOnHead(player, item);
 			} else {
@@ -288,12 +288,12 @@ public class BlockHat extends JavaPlugin
 			inv.removeItem(item);
 		}
 
-		if (helmet != null && helmet.getAmount() > 0)
+		if (helmet != null && helmet.getAmount() > 0 && checkPermission(player, BlockHatPerm.HAT_RETURN.node))
 		{
 			HashMap<Integer, ItemStack> leftover = inv.addItem(new ItemStack[] { helmet });
 			if (!leftover.isEmpty())
 			{
-				player.sendMessage("Was unble to put the old hat away, droping it at your feet");
+				player.sendMessage("Was unable to put the old hat away, dropping it at your feet");
 
 				for (Entry<Integer, ItemStack> e : leftover.entrySet())
 				{
