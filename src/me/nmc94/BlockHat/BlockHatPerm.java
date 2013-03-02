@@ -5,7 +5,9 @@ public enum BlockHatPerm {
     HAT("hat"),
     HAT_ITEMS("hat.items"),
     HAT_GIVE_PLAYERS_ITEMS("hat.give.players.items"),
-    HAT_GIVE_GROUPS_ITEMS("hat.give.groups.items"),;
+    HAT_GIVE_GROUPS_ITEMS("hat.give.groups.items"),
+    HAT_RETURN("return"),
+    UNHAT("unhat");
     public final String node;
 
     BlockHatPerm(final String permissionNode) {

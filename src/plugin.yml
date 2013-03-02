@@ -19,10 +19,20 @@ commands:
     description: Removes player's hat.
 permissions:
   blockhat.hat:
-    description: use /hat
+    default: op
+    description: Allows you to use /hat
   blockhat.hat.items:
-    description: use /hat [item id]
+    default: op
+    description: Allows you to use /hat [item id]
   blockhat.hat.give.players.items:
-    description: use /hat [player name] [item id]
+    default: op
+    description: Allows you to use /hat [player name] [item id]
   blockhat.hat.give.groups.items:
-    description: use /hat group [group name] [item id]
+    default: op
+    description: Allows you to use /hat group [group name] [item id]
+  blockhat.return:
+    default: op
+    description: Returns a player's hat to their inventory when replaced or removed
+  blockhat.unhat:
+    default: op
+    description: Allows you to use /unhat
