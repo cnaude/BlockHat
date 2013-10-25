@@ -15,6 +15,7 @@
 /bin
 /dist
 /localexport.jardesc
+/target
 
 # Mac filesystem dust
 .DS_Store
