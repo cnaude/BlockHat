@@ -273,6 +273,9 @@ public class BlockHat extends JavaPlugin
                 if (item.getEnchantments() != null) {
                     hat.addEnchantments(item.getEnchantments());
                 }
+                if (item.hasItemMeta()) {
+                    hat.setItemMeta(item.getItemMeta());
+                }
 		MaterialData data = item.getData();
 		if (data != null)
 		{
